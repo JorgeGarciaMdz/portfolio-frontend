@@ -1,0 +1,37 @@
+<form class="mt-4" [formGroup]="singinFormBuilder" (submit)="onSubmitSingin($event)">
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col" *ngIf="!activeSession">
+            <input type="text" class="form-control" formControlName="username" placeholder="email">
+            <div *ngIf="username?.invalid && ( username?.dirty || username?.touched)" class="alert-danger">
+                <div *ngIf="username?.errors?.['required']">
+                    First Name is required
+                </div>
+                <div *ngIf="username?.errors?.['email']">
+                    Username must be at like user@user.com
+                </div>
+
+            </div>
+        </div>
+        <div class="col" *ngIf="!activeSession">
+            <input type="text" class="form-control" formControlName="password" placeholder="password">
+            <div *ngIf="password?.invalid && ( password?.dirty || password?.touched)" class="alert-danger">
+                <div *ngIf="password?.errors?.['required']">
+                    Password is required
+                </div>
+                <div *ngIf="password?.errors?.['minlength']">
+                    Password must be at least 8 characters long.
+                </div>
+            </div>
+        </div>
+        <div class="col-md" *ngIf="activeSession"></div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary button-singin" *ngIf="!activeSession" [disabled]="singinFormBuilder.invalid">Sing In</button>
+            <button class="btn btn-outline-primary button-singin" *ngIf="!activeSession">Sing Up</button>
+            <button class="btn btn-outline-primary button-singin" *ngIf="activeSession" (click)="setDisableSession()">Sing Out</button>
+            <span *ngIf="messageErrorSession" class="alert-danger">
+                {{messageErrorSession}}
+            </span>
+        </div>
+    </div>
+</form>
