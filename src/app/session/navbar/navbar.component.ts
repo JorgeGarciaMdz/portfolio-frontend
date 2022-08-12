@@ -15,8 +15,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private singIn: SinginService) {
     this.singinFormBuilder = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      username: ['juan@juan.com', [Validators.required, Validators.email]],
+      password: ['12345678', [Validators.required, Validators.minLength(8)]]
     });
   }
 
@@ -34,13 +34,13 @@ export class NavbarComponent implements OnInit {
   public onSubmitSingin(event: Event): boolean {
     event.preventDefault;
     this.singIn.initSession(this.singinFormBuilder.value).subscribe({
-      next: data => {
+      next: (data: { jwt: string; }) => {
         sessionStorage.setItem('Authorization', 'Bearer ' + data.jwt);
         this.messageErrorSession = undefined;
         this.setActiveSession();
         this.singinFormBuilder.reset();
       },
-      error: error => {
+      error: (error: { status: string; }) => {
         this.messageErrorSession = 'Username or Password invalid!';
         console.warn('Status error: ' + error.status);
         this.setDisableSession();

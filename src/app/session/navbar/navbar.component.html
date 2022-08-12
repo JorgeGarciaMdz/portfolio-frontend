@@ -1,7 +1,7 @@
 <form class="mt-4" [formGroup]="singinFormBuilder" (submit)="onSubmitSingin($event)">
-    <div class="row">
-        <div class="col-md-6"></div>
-        <div class="col" *ngIf="!activeSession">
+    <div class="row" *ngIf="!activeSession">
+        <div class="col-md-5"></div>
+        <div class="col-md-2" >
             <input type="text" class="form-control" formControlName="username" placeholder="email">
             <div *ngIf="username?.invalid && ( username?.dirty || username?.touched)" class="alert-danger">
                 <div *ngIf="username?.errors?.['required']">
@@ -10,10 +10,9 @@
                 <div *ngIf="username?.errors?.['email']">
                     Username must be at like user@user.com
                 </div>
-
             </div>
         </div>
-        <div class="col" *ngIf="!activeSession">
+        <div class="col-md-2">
             <input type="text" class="form-control" formControlName="password" placeholder="password">
             <div *ngIf="password?.invalid && ( password?.dirty || password?.touched)" class="alert-danger">
                 <div *ngIf="password?.errors?.['required']">
@@ -24,14 +23,25 @@
                 </div>
             </div>
         </div>
-        <div class="col-md" *ngIf="activeSession"></div>
-        <div class="col-md-2">
-            <button class="btn btn-outline-primary button-singin" *ngIf="!activeSession" [disabled]="singinFormBuilder.invalid">Sing In</button>
-            <button class="btn btn-outline-primary button-singin" *ngIf="!activeSession">Sing Up</button>
-            <button class="btn btn-outline-primary button-singin" *ngIf="activeSession" (click)="setDisableSession()">Sing Out</button>
-            <span *ngIf="messageErrorSession" class="alert-danger">
+        <div class="col-md-3">
+            <button class="btn btn-outline-primary button-singin"
+                [disabled]="singinFormBuilder.invalid">Sing In</button>
+            <button class="btn btn-outline-primary button-singin">Sing Up</button>
+            <div *ngIf="messageErrorSession" class="alert-danger">
                 {{messageErrorSession}}
-            </span>
+            </div>
+        </div>
+    </div>
+    <div class="row"  *ngIf="activeSession">
+        <div class="col-md-9">
+
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-outline-primary button-singin" style="float: right;"
+            (click)="setDisableSession()">Sing Out</button>
+        </div>
+        <div class="col">
+            <img src="./assets/favicon.ico" class="rounded float-left" style="float: left; margin-top: 5px; padding-left: 0px;" alt="">
         </div>
     </div>
 </form>
